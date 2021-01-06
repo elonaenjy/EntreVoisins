@@ -16,11 +16,10 @@ public class ZoomNeighbourActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate( savedInstanceState );
-        Log.e( "TAG", "Je rentre dans zoomActivity" );
+        Log.e( "TAG4", "Je rentre dans zoomActivity" );
         setContentView( R.layout.activity_zoom_neighbour );
         Neighbour neighbour = (Neighbour) getIntent().getSerializableExtra( "NEIGHBOUR" );
         Log.e( "TAG3", "nom : " + neighbour.getName() );
-
 
         mZoomAvatar = (ImageView) findViewById( R.id.zoom_avatar );
         Glide.with(this)
