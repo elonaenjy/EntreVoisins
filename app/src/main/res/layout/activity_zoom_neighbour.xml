@@ -78,4 +78,5 @@
         app:layout_anchor="@id/app_bar_zoom"
         app:layout_anchorGravity="bottom|end" />
         android:src="@drawable/ic_baseline_star_border_24"
+
     </android.support.design.widget.CoordinatorLayout>
