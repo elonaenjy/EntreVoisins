@@ -1,0 +1,188 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.v4.widget.NestedScrollView
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    app:layout_behavior="@string/appbar_scrolling_view_behavior"
+    tools:context=".ui.neighbour_list.ZoomNeighbourActivity"
+    tools:showIn="@layout/activity_zoom_neighbour">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical"
+        android:paddingVertical="10dp">
+
+        <android.support.v7.widget.CardView
+            android:id="@+id/mcv_detail_text"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_margin="15dp"
+            android:elevation="3dp"
+            app:cardCornerRadius="5dp">
+
+            <LinearLayout
+                android:id="@+id/linearLayoutDetail2"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_weight="2"
+                android:orientation="vertical"
+                android:paddingVertical="10dp"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent">
+
+                <TextView
+                    android:id="@+id/zoom_nom2"
+                    style="@style/TextAppearance.MaterialComponents.Headline5"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="start"
+                    android:layout_marginTop="0dp"
+                    android:paddingStart="@dimen/title_name_padding"
+                    android:paddingTop="5dp"
+                    android:textSize="@dimen/neighbour_title"
+                    app:layout_anchor="@string/title_activity_detail_neighbour" />
+
+                <View
+                    android:id="@+id/scdivider"
+                    android:layout_width="match_parent"
+                    android:layout_height="1dp"
+                    android:layout_marginTop="10dp"
+                    android:layout_marginBottom="0dp"
+                    android:alpha="20"
+                    android:background="?android:attr/listDivider"
+                    android:backgroundTint="#9B9B9B" />
+
+                <LinearLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/cardview_padding"
+                    android:orientation="horizontal"
+                    android:paddingStart="@dimen/cardview_padding"
+                    android:paddingBottom="10dp">
+
+                    <ImageView
+                        android:id="@+id/icDetailLocation"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:paddingRight="15dp"
+                        app:srcCompat="@drawable/ic_baseline_location_on_24" />
+
+                    <TextView
+                        android:id="@+id/zoom_localisation"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="Saint Pierre du mont à 5km"
+                        android:textSize="@dimen/neighbour_text_info" />
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/cardview_padding"
+                    android:orientation="horizontal"
+                    android:paddingStart="@dimen/cardview_padding"
+                    android:paddingBottom="10dp">
+
+                    <ImageView
+                        android:id="@+id/icDetailPhone"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:paddingRight="15dp"
+                        app:srcCompat="@drawable/ic_baseline_phone_24" />
+
+                    <TextView
+                        android:id="@+id/zoom_phone"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:textSize="@dimen/neighbour_text_info" />
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/cardview_padding"
+                    android:orientation="horizontal"
+                    android:paddingStart="@dimen/cardview_padding">
+
+                    <ImageView
+                        android:id="@+id/icDeailSocial"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:paddingRight="15dp"
+                        app:srcCompat="@drawable/ic_baseline_language_24" />
+
+                    <TextView
+                        android:id="@+id/zoom_reseau"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:textSize="@dimen/neighbour_text_info" />
+                </LinearLayout>
+            </LinearLayout>
+        </android.support.v7.widget.CardView>
+
+        <android.support.design.card.MaterialCardView
+            android:id="@+id/cv_detail_mtext"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="@dimen/cardview_padding"
+            android:layout_marginTop="10dp"
+            android:layout_marginEnd="@dimen/cardview_padding"
+            android:layout_marginBottom="10dp"
+            android:elevation="3dp"
+            app:cardCornerRadius="5dp"
+            app:layout_constraintTop_toBottomOf="@id/mcv_detail_text">
+
+            <LinearLayout
+                android:id="@+id/linearLayout_bottom_detail"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_alignParentStart="true"
+                android:layout_alignParentEnd="true"
+                android:layout_alignParentRight="true"
+                android:layout_alignParentBottom="true"
+                android:layout_marginTop="10dp"
+                android:layout_marginBottom="10dp"
+                android:layout_weight="3"
+                android:elevation="3dp"
+                android:orientation="vertical"
+                app:layout_constraintBottom_toBottomOf="parent">
+
+                <TextView
+                    android:id="@+id/mAbout"
+                    style="@style/TextAppearance.MaterialComponents.Headline5"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:paddingStart="@dimen/cardview_padding"
+                    android:paddingEnd="@dimen/cardview_padding"
+                    android:text="A propos de moi"
+                    android:textAppearance="@style/TextAppearance.AppCompat.Display1" />
+
+                <View
+                    android:id="@+id/scdivider2"
+                    android:layout_width="match_parent"
+                    android:layout_height="1dp"
+                    android:layout_marginTop="10dp"
+                    android:layout_marginBottom="0dp"
+                    android:alpha="20"
+                    android:background="?android:attr/listDivider"
+                    android:backgroundTint="#9B9B9B" />
+
+                <TextView
+                    android:id="@+id/zoom_about_me"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:paddingStart="@dimen/cardview_padding"
+                    android:paddingTop="@dimen/cardview_padding"
+                    android:paddingEnd="@dimen/cardview_padding"
+                    android:paddingBottom="@dimen/cardview_padding"
+                    android:textSize="@dimen/neighbour_text_info" />
+            </LinearLayout>
+        </android.support.design.card.MaterialCardView>
+    </LinearLayout>
+</android.support.v4.widget.NestedScrollView>

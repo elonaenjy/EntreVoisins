@@ -93,7 +93,7 @@ public class Neighbour implements Serializable {
         this.aboutMe = aboutMe;
     }
 
-    public boolean getIsFavorit() {
+    public boolean isFavorit() {
         return isFavorit;
     }
 

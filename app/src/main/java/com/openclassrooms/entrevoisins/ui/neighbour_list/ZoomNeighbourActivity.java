@@ -1,86 +1,119 @@
 package com.openclassrooms.entrevoisins.ui.neighbour_list;
 
 import android.os.Bundle;
-import android.support.design.widget.AppBarLayout;
+import android.support.design.widget.CollapsingToolbarLayout;
+import android.support.design.widget.FloatingActionButton;
+import android.support.design.widget.Snackbar;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
-import android.view.Menu;
-import android.view.MenuItem;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
 import com.openclassrooms.entrevoisins.R;
+import com.openclassrooms.entrevoisins.di.DI;
 import com.openclassrooms.entrevoisins.model.Neighbour;
+import com.openclassrooms.entrevoisins.service.NeighbourApiService;
 
+/**
+ *
+ */
 public class ZoomNeighbourActivity extends AppCompatActivity {
-    private ImageView mZoomAvatar;
-    private TextView mZoomNom;
-    Toolbar toolbar;
-    Menu zoom_menu;
-    AppBarLayout appBarLayoutZoom;
+    int mId;
+    String mDetailName;
+    ImageView mZoomAvatar;
+    Boolean isFavorite;
+    private Neighbour neighbour;
+    private NeighbourApiService mFavApiService;
+    private FloatingActionButton fab;
+    private TextView mZoomNom2;
+    private TextView mZoomLocalisation;
+    private TextView mZoomPhone;
+    private TextView mZoomReseau;
+    private TextView mZoomAboutMe;
 
-    @Override
-    protected void onCreate(Bundle savedInstanceState) {
-        super.onCreate( savedInstanceState );
-        setContentView( R.layout.activity_zoom_neighbour );
-        Neighbour neighbour = (Neighbour) getIntent().getSerializableExtra( "NEIGHBOUR" );
-        Log.e( "TAG3", "nom : " + neighbour.getName() );
 
-        mZoomAvatar = findViewById( R.id.zoom_avatar );
-        Glide.with( this )
-                .load( neighbour.getAvatarUrl() )
-                .into( mZoomAvatar );
+        @Override
+        protected void onCreate(Bundle savedInstanceState) {
+            mFavApiService = DI.getNeighbourApiService();
+            super.onCreate( savedInstanceState );
+            setContentView( R.layout.activity_zoom_neighbour );
+            Toolbar toolbar = findViewById( R.id.toolbar );
+            setSupportActionBar( toolbar );
+            getSupportActionBar().setDisplayHomeAsUpEnabled( true );
 
-        appBarLayoutZoom = findViewById( R.id.app_bar_zoom );
-        toolbar = findViewById( R.id.toolbar );
-        setSupportActionBar( toolbar);
+            Neighbour neighbour = (Neighbour) getIntent().getSerializableExtra( "NEIGHBOUR" );
 
-        getSupportActionBar().setDisplayShowTitleEnabled( false );
+            mZoomAvatar = (ImageView) findViewById( R.id.zoom_avatar );
+            mZoomNom2 = (TextView) findViewById( R.id.zoom_nom2 );
+            mZoomLocalisation = (TextView) findViewById( R.id.zoom_localisation );
+            mZoomPhone = (TextView) findViewById( R.id.zoom_phone );
+            mZoomReseau = (TextView) findViewById( R.id.zoom_reseau );
+            mZoomAboutMe = (TextView) findViewById( R.id.zoom_about_me );
 
-        toolbar.setNavigationOnClickListener( new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                finish();
+            Glide.with( this )
+                    .load( neighbour.getAvatarUrl() )
+                    .into( mZoomAvatar );
+
+            CollapsingToolbarLayout collapsingToolbar = findViewById( R.id.toolbar_layout_zoom );
+
+            mZoomNom2.setText( neighbour.getName() );
+
+            collapsingToolbar.setTitle( neighbour.getName() );
+
+            mZoomLocalisation.setText( neighbour.getAddress() );
+            mZoomPhone.setText( neighbour.getPhoneNumber() );
+            mZoomAboutMe.setText( neighbour.getAboutMe() );
+            String nom = neighbour.getName();
+            mZoomReseau.append("www.Facebook.com/"+nom);
+
+            fab = findViewById( R.id.fab );
+            if (neighbour.isFavorit()) {
+                fab.setImageResource( R.drawable.ic_baseline_star_24 );
+                fab.hide();
+                fab.show();
+            } else {
+                fab.setImageResource( R.drawable.ic_baseline_star_border_24 );
+                fab.hide();
+                fab.show();
             }
-        } );
-    }
-
-    @Override
-    public boolean onCreateOptionsMenu(Menu menu) {
-        // Inflate the menu; this adds items to the action bar if it is present.
-        this.zoom_menu = menu;
-        getMenuInflater().inflate( R.menu.zoom_menu, menu );
-        hideShowFAB();
-        return true;
-    }
-
-    @Override
-    public boolean onOptionsItemSelected(MenuItem item) {
-        int id = item.getItemId();
-        if (id == R.id.favorit_zoom) {
-            return true;
         }
-        return super.onOptionsItemSelected( item );
-    }
 
-    public void hideShowFAB() {
-        appBarLayoutZoom.addOnOffsetChangedListener( new AppBarLayout.OnOffsetChangedListener() {
+    private void fabOnclickListner() {
+
+        fab.setOnClickListener(new View.OnClickListener() {
             @Override
-            public void onOffsetChanged(AppBarLayout appBarLayout, int verticalOffset) {
-                MenuItem menuItem = zoom_menu.findItem( R.id.favorit_zoom );
-                if (Math.abs( verticalOffset ) == appBarLayout.getTotalScrollRange()) {
-                    menuItem.setVisible( true );
-                } else if (verticalOffset == 0) {
-                    menuItem.setVisible( false );
+            public void onClick(View view) {
+
+                if (!isFavorite) {
+                    fab.setImageResource(R.drawable.ic_baseline_star_24);
+                    fab.hide();
+                    fab.show();
+                    addFavoriteNeighbour(view);
+                } else {
+                    deleteFavoriteNeighbour(view);
                 }
             }
-        } );
-
+        });
     }
+
+    private void addFavoriteNeighbour(View view) {
+        mFavApiService.addFavoriteNeighbour(neighbour);
+        isFavorite = true;
+        Snackbar.make(view, "Vous venez d'ajouter " + mDetailName + " à vos voisins favoris!", Snackbar.LENGTH_LONG)
+                .setAction("Action", null).show();
+    }
+
+    private void deleteFavoriteNeighbour(View view) {
+        fab.setImageResource(R.drawable.ic_baseline_star_border_24);
+        fab.hide();
+        fab.show();
+        Snackbar.make(view, "Ce voisin a été supprimé de vos favoris!", Snackbar.LENGTH_LONG)
+                .setAction("Action", null).show();
+        isFavorite = false;
+        mFavApiService.deleteFavoriteNeighbour(neighbour);
+    }
+
 }
-
-
-
