@@ -10,7 +10,7 @@
     tools:context=".ui.neighbour_list.ListNeighbourActivity">
 
     <android.support.design.widget.AppBarLayout
-        android:id="@+id/app_bar_zoom"
+        android:id="@+id/app_bar"
         android:layout_width="match_parent"
         android:layout_height="300dp"
         android:fitsSystemWindows="true"
@@ -71,7 +71,7 @@
         app:borderWidth="0dp"
         app:fabSize="normal"
         app:fabCustomSize="@dimen/fab_width"
-        app:layout_anchor="@id/app_bar_zoom"
+        app:layout_anchor="@id/app_bar"
         app:layout_anchorGravity="bottom|end" />
 
 </android.support.design.widget.CoordinatorLayout>
