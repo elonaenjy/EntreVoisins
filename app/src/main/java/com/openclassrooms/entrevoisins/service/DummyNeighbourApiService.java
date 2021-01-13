@@ -1,5 +1,7 @@
 package com.openclassrooms.entrevoisins.service;
 
+import android.view.View;
+
 import com.openclassrooms.entrevoisins.model.Neighbour;
 
 import java.util.ArrayList;
@@ -11,6 +13,7 @@ import java.util.List;
 public class DummyNeighbourApiService implements  NeighbourApiService {
 
     private List<Neighbour> neighbours = DummyNeighbourGenerator.generateNeighbours();
+    List<Neighbour> favoriteList = new ArrayList<>();
 
     /**
      * {@inheritDoc}
@@ -20,18 +23,7 @@ public class DummyNeighbourApiService implements  NeighbourApiService {
         return neighbours;
     }
 
-    @Override
-    public List<Neighbour> getFavoriteNeighbours() {
-        List<Neighbour> favoriteList = new ArrayList<>();
-        for (Neighbour neighbour : getNeighbours()) {
-            if (neighbour.isFavorit()) {
-                favoriteList.add(neighbour);
-            }
-        }
-        return favoriteList;
-    }
-
-    /**
+       /**
      * {@inheritDoc}
      */
     @Override
@@ -51,35 +43,31 @@ public class DummyNeighbourApiService implements  NeighbourApiService {
     /**
      * {@inheritDoc}
      */
-    //@Override
-    // public List<Neighbour> getFavoritNeighbours() {
-    //    List<Neighbour> favoriteList = new ArrayList<>();
-    //    for (Neighbour neighbour : getNeighbours()) {
-    //         if (neighbour.isFavorit()) {
-    //            favoriteList.add(neighbour);
-    //        }
-    //    }
-    //    return favoriteList;
-    //}
+    @Override
+    public List<Neighbour> getFavoritNeighbours() {
+        for (Neighbour neighbour : getNeighbours()) {
+             if (neighbour.isFavorit()) {
+                favoriteList.add(neighbour);
+            }
+        }
+        return favoriteList;
+    }
 
     /**
      * Add a favorite neighbour
      * {@param neighbour}
      */
     @Override
-    public void addFavoriteNeighbour(Neighbour neighbour) {
-        // for (Neighbour neighbour1 : getNeighbours()) {
-        //    if (neighbour.getId().equals(neighbour1.getId())) {
-        //        neighbour1.setFavorite(true);
-            }
+    public void addFavoriteNeighbour(View view_zoom) {
+
+    }
 
     /**
      * {@inheritDoc}
      */
     @Override
-    public void deleteFavoriteNeighbour(Neighbour neighbour) {
-        // for (Neighbour favNeighbour : getNeighbours()) {
-        //    if (neighbour.getId().equals(favNeighbour.getId())) {
-        //        favNeighbour.setFavorite(false);
-            }
-        }
+    public void deleteFavoriteNeighbour(View view_zoom) {
+
+         }
+
+}

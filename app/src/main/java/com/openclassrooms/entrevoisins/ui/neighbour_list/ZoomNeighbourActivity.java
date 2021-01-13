@@ -22,7 +22,7 @@ import com.openclassrooms.entrevoisins.service.NeighbourApiService;
  */
 public class ZoomNeighbourActivity extends AppCompatActivity {
     int mId;
-    String mDetailName;
+    String nom;
     ImageView mZoomAvatar;
     Boolean isFavorite;
     private Neighbour neighbour;
@@ -66,11 +66,13 @@ public class ZoomNeighbourActivity extends AppCompatActivity {
             mZoomLocalisation.setText( neighbour.getAddress() );
             mZoomPhone.setText( neighbour.getPhoneNumber() );
             mZoomAboutMe.setText( neighbour.getAboutMe() );
-            String nom = neighbour.getName();
+            nom = neighbour.getName();
             mZoomReseau.append("www.Facebook.com/"+nom);
+            isFavorite = neighbour.isFavorit();
+            Log.e("TAG3", "alimentation du booleen : "+isFavorite);
 
             fab = findViewById( R.id.fab );
-            if (neighbour.isFavorit()) {
+            if (isFavorite) {
                 fab.setImageResource( R.drawable.ic_baseline_star_24 );
                 fab.hide();
                 fab.show();
@@ -79,41 +81,50 @@ public class ZoomNeighbourActivity extends AppCompatActivity {
                 fab.hide();
                 fab.show();
             }
+            fabOnclickListener();
         }
 
-    private void fabOnclickListner() {
-
+    private void fabOnclickListener() {
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
-            public void onClick(View view) {
+            public void onClick(View view_zoom) {
+                Log.e("TAG3", "je rentre dans onclickListener "+isFavorite);
 
                 if (!isFavorite) {
                     fab.setImageResource(R.drawable.ic_baseline_star_24);
                     fab.hide();
                     fab.show();
-                    addFavoriteNeighbour(view);
+                    addFavoriteNeighbour(view_zoom);
                 } else {
-                    deleteFavoriteNeighbour(view);
+                    fab.setImageResource(R.drawable.ic_baseline_star_border_24);
+                    fab.hide();
+                    fab.show();
+
+                    deleteFavoriteNeighbour(view_zoom);
                 }
             }
         });
     }
 
-    private void addFavoriteNeighbour(View view) {
-        mFavApiService.addFavoriteNeighbour(neighbour);
-        isFavorite = true;
-        Snackbar.make(view, "Vous venez d'ajouter " + mDetailName + " à vos voisins favoris!", Snackbar.LENGTH_LONG)
+    private void addFavoriteNeighbour(View view_zoom) {
+        fab.setImageResource(R.drawable.ic_baseline_star_24);
+        fab.hide();
+        fab.show();
+        Snackbar.make(view_zoom, "Ce voisin a été ajouté de vos favoris!", Snackbar.LENGTH_LONG)
                 .setAction("Action", null).show();
-    }
 
-    private void deleteFavoriteNeighbour(View view) {
+        mFavApiService.addFavoriteNeighbour(view_zoom);
+
+        isFavorite = true;
+        }
+
+    private void deleteFavoriteNeighbour(View view_zoom) {
         fab.setImageResource(R.drawable.ic_baseline_star_border_24);
         fab.hide();
         fab.show();
-        Snackbar.make(view, "Ce voisin a été supprimé de vos favoris!", Snackbar.LENGTH_LONG)
+        Snackbar.make(view_zoom, "Ce voisin a été supprimé de vos favoris!", Snackbar.LENGTH_LONG)
                 .setAction("Action", null).show();
         isFavorite = false;
-        mFavApiService.deleteFavoriteNeighbour(neighbour);
+        mFavApiService.deleteFavoriteNeighbour(view_zoom);
     }
-
 }

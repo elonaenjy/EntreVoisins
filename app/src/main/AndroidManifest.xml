@@ -20,7 +20,8 @@
 
         <activity
             android:name=".ui.neighbour_list.ZoomNeighbourActivity"
-            android:theme="@style/AppThemeNoToolBar" />
+            android:theme="@style/AppThemeNoToolBar"
+            />
 
         <activity
             android:name=".ui.neighbour_list.ListNeighbourActivity"
