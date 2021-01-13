@@ -43,7 +43,7 @@
                     android:paddingStart="@dimen/title_name_padding"
                     android:paddingTop="5dp"
                     android:textSize="@dimen/neighbour_title"
-                    app:layout_anchor="@string/title_activity_detail_neighbour" />
+                    app:layout_anchor="@string/title_activity_zoom_neighbour" />
 
                 <View
                     android:id="@+id/scdivider"

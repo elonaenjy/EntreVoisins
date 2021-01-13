@@ -81,6 +81,7 @@ public class ZoomNeighbourActivity extends AppCompatActivity {
                 fab.hide();
                 fab.show();
             }
+
             fabOnclickListener();
         }
 
@@ -96,10 +97,6 @@ public class ZoomNeighbourActivity extends AppCompatActivity {
                     fab.show();
                     addFavoriteNeighbour(view_zoom);
                 } else {
-                    fab.setImageResource(R.drawable.ic_baseline_star_border_24);
-                    fab.hide();
-                    fab.show();
-
                     deleteFavoriteNeighbour(view_zoom);
                 }
             }
