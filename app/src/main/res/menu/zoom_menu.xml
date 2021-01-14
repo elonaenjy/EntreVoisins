@@ -16,5 +16,7 @@
     android:orderInCategory="200"
     app:showAsAction="ifRoom"
     android:icon="@drawable/ic_baseline_star_border_24"
-    android:title="TODO" />
+    tools:ignore="MenuTitle" />
 </menu>
+
+

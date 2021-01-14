@@ -83,15 +83,14 @@ public class ZoomNeighbourActivity extends AppCompatActivity {
             }
 
             fabOnclickListener();
+
         }
 
     private void fabOnclickListener() {
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view_zoom) {
-                Log.e("TAG3", "je rentre dans onclickListener "+isFavorite);
-
-                if (!isFavorite) {
+                     if (!isFavorite) {
                     fab.setImageResource(R.drawable.ic_baseline_star_24);
                     fab.hide();
                     fab.show();
