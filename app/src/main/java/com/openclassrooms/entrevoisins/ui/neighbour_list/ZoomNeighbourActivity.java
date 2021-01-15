@@ -49,7 +49,6 @@ public class ZoomNeighbourActivity extends AppCompatActivity {
             getSupportActionBar().setDisplayHomeAsUpEnabled( true );
 
             AppBarLayout mAppBarLayout = (AppBarLayout) findViewById(R.id.app_bar);
-
             mAppBarLayout.addOnOffsetChangedListener(new AppBarLayout.OnOffsetChangedListener() {
                 boolean isShow = false;
                 int scrollRange = -1;
@@ -68,7 +67,7 @@ public class ZoomNeighbourActivity extends AppCompatActivity {
                 }
             });
 
-            Neighbour neighbour = (Neighbour) getIntent().getSerializableExtra( "NEIGHBOUR" );
+            neighbour = (Neighbour) getIntent().getSerializableExtra( "NEIGHBOUR" );
 
             mZoomAvatar = (ImageView) findViewById( R.id.zoom_avatar );
             mZoomNom2 = (TextView) findViewById( R.id.zoom_nom2 );
@@ -98,12 +97,10 @@ public class ZoomNeighbourActivity extends AppCompatActivity {
             fab = findViewById( R.id.fab );
             if (isFavorite) {
                 fab.setImageResource( R.drawable.ic_baseline_star_24 );
-//                getActionBar().setIcon(R.drawable.ic_baseline_star_24);
                 fab.hide();
                 fab.show();
             } else {
                 fab.setImageResource( R.drawable.ic_baseline_star_border_24 );
-//                getActionBar().setIcon(R.drawable.ic_baseline_star_border_24);
                 fab.hide();
                 fab.show();
             }
@@ -155,16 +152,14 @@ public class ZoomNeighbourActivity extends AppCompatActivity {
         if (!isFavorite) {
             item.setIcon( R.drawable.ic_baseline_star_24);
             isFavorite = true;
-    //        addFavorit();
+            addFavorit(neighbour);
 
         } else {
             item.setIcon(R.drawable.ic_baseline_star_border_24);
             isFavorite= false;
-    //        deleteFavorit(idNeighbour);
+            deleteFavorit(neighbour);
         }
 
-        System.out.println(nom);
-        System.out.println(isFavorite);
         //noinspection SimplifiableIfStatement
             return true;
         }
@@ -178,8 +173,12 @@ public class ZoomNeighbourActivity extends AppCompatActivity {
         MenuItem item = menu.findItem(id);
         item.setVisible(true);
     }
-    private void addFavorit(Neighbour neighbour) {
 
+    private void addFavorit(Neighbour neighbour) {
+        mFavApiService.addFavoriteNeighbour(neighbour );
     };
 
-   }
+    private void deleteFavorit(Neighbour neighbour) {
+        mFavApiService.deleteFavoriteNeighbour(neighbour );
+    };
+}
