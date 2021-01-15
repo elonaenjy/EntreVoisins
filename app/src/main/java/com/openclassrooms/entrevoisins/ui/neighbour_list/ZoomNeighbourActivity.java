@@ -27,10 +27,9 @@ import com.openclassrooms.entrevoisins.service.NeighbourApiService;
 public class ZoomNeighbourActivity extends AppCompatActivity {
     String nom;
     long idNeighbour;
-    ImageView mZoomAvatar;
     Boolean isFavorite;
     Neighbour neighbour;
-    private NeighbourApiService mFavApiService;
+    private ImageView mZoomAvatar;
     private FloatingActionButton fab;
     private TextView mZoomNom2;
     private TextView mZoomLocalisation;
@@ -38,6 +37,7 @@ public class ZoomNeighbourActivity extends AppCompatActivity {
     private TextView mZoomReseau;
     private TextView mZoomAboutMe;
     private Menu menu;
+    private NeighbourApiService mFavApiService;
 
     @Override
         protected void onCreate(Bundle savedInstanceState) {
@@ -121,6 +121,7 @@ public class ZoomNeighbourActivity extends AppCompatActivity {
                         Snackbar.make(view_zoom, "Ce voisin a été ajouté de vos favoris!", Snackbar.LENGTH_LONG)
                                 .setAction("Action", null).show();
                         isFavorite = true;
+                        addFavorit(Neighbour neighbour);
                     } else {
                         fab.setImageResource(R.drawable.ic_baseline_star_border_24);
                         fab.hide();
@@ -176,5 +177,8 @@ public class ZoomNeighbourActivity extends AppCompatActivity {
         MenuItem item = menu.findItem(id);
         item.setVisible(true);
     }
+    private void addFavorit(Neighbour neighbour) {
+
+    };
 
    }
