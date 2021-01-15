@@ -118,34 +118,20 @@ public class ZoomNeighbourActivity extends AppCompatActivity {
                         fab.setImageResource(R.drawable.ic_baseline_star_24);
                         fab.hide();
                         fab.show();
-                        addFavorit(view_zoom);
+                        Snackbar.make(view_zoom, "Ce voisin a été ajouté de vos favoris!", Snackbar.LENGTH_LONG)
+                                .setAction("Action", null).show();
+                        isFavorite = true;
                     } else {
                         fab.setImageResource(R.drawable.ic_baseline_star_border_24);
                         fab.hide();
                         fab.show();
-                        deleteFavorit(view_zoom);
+                        Snackbar.make(view_zoom, "Ce voisin a été supprimé de vos favoris!", Snackbar.LENGTH_LONG)
+                                .setAction("Action", null).show();
+                        isFavorite = false;
                     }
                 }
             });
         }
-
-        private void addFavorit (View view_zoom) {
-            Snackbar.make(view_zoom, "Ce voisin a été ajouté de vos favoris!", Snackbar.LENGTH_LONG)
-                    .setAction("Action", null).show();
-            isFavorite = true;
-            System.out.println(idNeighbour);
-            System.out.println(nom);
-
-    //        mFavApiService.addFavoriteNeighbour(neighbour);
-        }
-
-        private void deleteFavorit(View view_zoom) {
-             Snackbar.make(view_zoom, "Ce voisin a été supprimé de vos favoris!", Snackbar.LENGTH_LONG)
-                    .setAction("Action", null).show();
-                isFavorite = false;
-            //     mFavApiService.deleteFavoriteNeighbour(Neihbour neighbour);
-        }
-
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
