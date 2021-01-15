@@ -7,10 +7,7 @@ import android.support.v4.app.Fragment;
 import android.support.v7.widget.DividerItemDecoration;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
-import android.util.Log;
 import android.view.LayoutInflater;
-import android.view.Menu;
-import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 
@@ -32,21 +29,32 @@ public class NeighbourFragment extends Fragment {
     private NeighbourApiService mApiService;
     private List<Neighbour> mNeighbours;
     private RecyclerView mRecyclerView;
+    private Boolean mIsfavoris;
+    private static String IS_FAVORIS_KEY = "isFavoris";
 
 
     /**
      * Create and return a new instance
      * @return @{@link NeighbourFragment}
      */
-    public static NeighbourFragment newInstance() {
+    public static NeighbourFragment newInstance(boolean isFavoris) {
         NeighbourFragment fragment = new NeighbourFragment();
+        Bundle bundle = new Bundle();
+        bundle.putBoolean(IS_FAVORIS_KEY, isFavoris);
+        fragment.setArguments(bundle);
         return fragment;
     }
+
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         mApiService = DI.getNeighbourApiService();
+        Bundle bundle = this.getArguments();
+        if (bundle != null) {
+            System.out.println("je passe dans bundle non nul"+bundle);
+            mIsfavoris = bundle.getBoolean(IS_FAVORIS_KEY);
+        }
     }
 
     @Override
@@ -65,9 +73,12 @@ public class NeighbourFragment extends Fragment {
      * Init the List of neighbours
      */
     private void initList() {
-        mNeighbours = mApiService.getNeighbours();
+        if (mIsfavoris) {
+            mNeighbours = mApiService.getFavoriteNeighbours();
+        } else {
+            mNeighbours = mApiService.getNeighbours();
+        }
         mRecyclerView.setAdapter( new MyNeighbourRecyclerViewAdapter( mNeighbours ) );
-
     }
 
 
@@ -99,7 +110,6 @@ public class NeighbourFragment extends Fragment {
         initList();
     }
     private void configureOnClickRecyclerView() {
-        // 1 - Configure item click on RecyclerView
         ItemClickSupport.addTo(mRecyclerView, R.layout.fragment_neighbour)
                 .setOnItemClickListener(new ItemClickSupport.OnItemClickListener() {
                     @Override

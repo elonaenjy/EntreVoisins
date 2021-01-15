@@ -99,13 +99,13 @@ public class ZoomNeighbourActivity extends AppCompatActivity {
                 fab.setImageResource( R.drawable.ic_baseline_star_24 );
                 fab.hide();
                 fab.show();
-            } else {
-                fab.setImageResource( R.drawable.ic_baseline_star_border_24 );
-                fab.hide();
-                fab.show();
-            }
+                } else {
+                    fab.setImageResource( R.drawable.ic_baseline_star_border_24 );
+                    fab.hide();
+                    fab.show();
+                }
             fabOnclickListener();
-    }
+        }
 
         private void fabOnclickListener() {
             fab.setOnClickListener(new View.OnClickListener() {
@@ -152,8 +152,7 @@ public class ZoomNeighbourActivity extends AppCompatActivity {
                 finish();
                 return true;
             }
-            case android.R.id.icon: {
-                System.out.println( "je clique sur l'icône" );
+            case R.id.favorit_zoom : {
                 if (!isFavorite) {
                     item.setIcon( R.drawable.ic_baseline_star_24 );
                     isFavorite = true;

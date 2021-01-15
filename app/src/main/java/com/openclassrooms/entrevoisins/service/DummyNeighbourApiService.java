@@ -45,7 +45,7 @@ public class DummyNeighbourApiService implements  NeighbourApiService {
      * {@inheritDoc}
      */
     @Override
-    public List<Neighbour> getFavoritNeighbours() {
+    public List<Neighbour> getFavoriteNeighbours() {
         for (Neighbour neighbour : getNeighbours()) {
              if (neighbour.isFavorit()) {
                 favoriteList.add(neighbour);
@@ -61,7 +61,6 @@ public class DummyNeighbourApiService implements  NeighbourApiService {
     @Override
     public void addFavoriteNeighbour(Neighbour neighbour) {
         favoriteList.add(neighbour);
-        System.out.println(neighbour.getName());
     }
 
     /**
