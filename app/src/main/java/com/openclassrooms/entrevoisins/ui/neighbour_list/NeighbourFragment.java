@@ -104,10 +104,7 @@ public class NeighbourFragment extends Fragment {
                 .setOnItemClickListener(new ItemClickSupport.OnItemClickListener() {
                     @Override
                     public void onItemClicked(RecyclerView recyclerView, int position, View v) {
-                        Log.e("TAG", "Position : "+position);
-                        // 1 - Get user from adapter
                         Neighbour neighbour = mNeighbours.get(position);
-                        Log.e("TAG2", "nom : "+neighbour.getName());
                         Intent zoomNeighbourActivity = new Intent(getContext(), ZoomNeighbourActivity.class );
                         zoomNeighbourActivity.putExtra("NEIGHBOUR", neighbour);
                         startActivity( zoomNeighbourActivity  );

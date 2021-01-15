@@ -23,7 +23,8 @@ public class DummyNeighbourApiService implements  NeighbourApiService {
         return neighbours;
     }
 
-       /**
+
+    /**
      * {@inheritDoc}
      */
     @Override
@@ -58,15 +59,15 @@ public class DummyNeighbourApiService implements  NeighbourApiService {
      * {@param neighbour}
      */
     @Override
-    public void addFavoriteNeighbour(View view_zoom) {
-
+    public void addFavoriteNeighbour(Neighbour neighbour) {
+    System.out.println(neighbour.getName());
     }
 
     /**
      * {@inheritDoc}
      */
     @Override
-    public void deleteFavoriteNeighbour(View view_zoom) {
+    public void deleteFavoriteNeighbour(Neighbour neighbour) {
 
          }
 

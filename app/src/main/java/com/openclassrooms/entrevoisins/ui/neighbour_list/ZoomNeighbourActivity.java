@@ -7,6 +7,7 @@ import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
+import android.support.v7.widget.helper.ItemTouchHelper;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -24,11 +25,11 @@ import com.openclassrooms.entrevoisins.service.NeighbourApiService;
  *
  */
 public class ZoomNeighbourActivity extends AppCompatActivity {
-    int mId;
     String nom;
+    long idNeighbour;
     ImageView mZoomAvatar;
     Boolean isFavorite;
-    private Neighbour neighbour;
+    Neighbour neighbour;
     private NeighbourApiService mFavApiService;
     private FloatingActionButton fab;
     private TextView mZoomNom2;
@@ -38,7 +39,6 @@ public class ZoomNeighbourActivity extends AppCompatActivity {
     private TextView mZoomAboutMe;
     private Menu menu;
 
-
     @Override
         protected void onCreate(Bundle savedInstanceState) {
             mFavApiService = DI.getNeighbourApiService();
@@ -47,6 +47,26 @@ public class ZoomNeighbourActivity extends AppCompatActivity {
             Toolbar toolbar = findViewById( R.id.toolbar );
             setSupportActionBar( toolbar );
             getSupportActionBar().setDisplayHomeAsUpEnabled( true );
+
+            AppBarLayout mAppBarLayout = (AppBarLayout) findViewById(R.id.app_bar);
+
+            mAppBarLayout.addOnOffsetChangedListener(new AppBarLayout.OnOffsetChangedListener() {
+                boolean isShow = false;
+                int scrollRange = -1;
+                @Override
+                public void onOffsetChanged(AppBarLayout appBarLayout, int verticalOffset) {
+                    if (scrollRange == -1) {
+                        scrollRange = appBarLayout.getTotalScrollRange();
+                    }
+                    if (scrollRange + verticalOffset == 0) {
+                        isShow = true;
+                        showOption(R.id.favorit_zoom);
+                    } else if (isShow) {
+                        isShow = false;
+                        hideOption(R.id.favorit_zoom);
+                    }
+                }
+            });
 
             Neighbour neighbour = (Neighbour) getIntent().getSerializableExtra( "NEIGHBOUR" );
 
@@ -71,42 +91,61 @@ public class ZoomNeighbourActivity extends AppCompatActivity {
             mZoomPhone.setText( neighbour.getPhoneNumber() );
             mZoomAboutMe.setText( neighbour.getAboutMe() );
             nom = neighbour.getName();
-            mZoomReseau.append("www.Facebook.com/"+nom);
+            mZoomReseau.append( "www.Facebook.com/" + nom );
             isFavorite = neighbour.isFavorit();
+            idNeighbour = neighbour.getId();
 
             fab = findViewById( R.id.fab );
             if (isFavorite) {
                 fab.setImageResource( R.drawable.ic_baseline_star_24 );
+//                getActionBar().setIcon(R.drawable.ic_baseline_star_24);
                 fab.hide();
                 fab.show();
             } else {
                 fab.setImageResource( R.drawable.ic_baseline_star_border_24 );
+//                getActionBar().setIcon(R.drawable.ic_baseline_star_border_24);
                 fab.hide();
                 fab.show();
             }
-
             fabOnclickListener();
+    }
 
-            AppBarLayout mAppBarLayout = (AppBarLayout) findViewById(R.id.app_bar);
-            mAppBarLayout.addOnOffsetChangedListener(new AppBarLayout.OnOffsetChangedListener() {
-                boolean isShow = false;
-                int scrollRange = -1;
-
+        private void fabOnclickListener() {
+            fab.setOnClickListener(new View.OnClickListener() {
                 @Override
-                public void onOffsetChanged(AppBarLayout appBarLayout, int verticalOffset) {
-                    if (scrollRange == -1) {
-                        scrollRange = appBarLayout.getTotalScrollRange();
-                    }
-                    if (scrollRange + verticalOffset == 0) {
-                        isShow = true;
-                        showOption(R.id.favorit_zoom);
-                    } else if (isShow) {
-                        isShow = false;
-                        hideOption(R.id.favorit_zoom);
+                public void onClick(View view_zoom) {
+                    if (!isFavorite) {
+                        fab.setImageResource(R.drawable.ic_baseline_star_24);
+                        fab.hide();
+                        fab.show();
+                        addFavorit(view_zoom);
+                    } else {
+                        fab.setImageResource(R.drawable.ic_baseline_star_border_24);
+                        fab.hide();
+                        fab.show();
+                        deleteFavorit(view_zoom);
                     }
                 }
             });
         }
+
+        private void addFavorit (View view_zoom) {
+            Snackbar.make(view_zoom, "Ce voisin a été ajouté de vos favoris!", Snackbar.LENGTH_LONG)
+                    .setAction("Action", null).show();
+            isFavorite = true;
+            System.out.println(idNeighbour);
+            System.out.println(nom);
+
+    //        mFavApiService.addFavoriteNeighbour(neighbour);
+        }
+
+        private void deleteFavorit(View view_zoom) {
+             Snackbar.make(view_zoom, "Ce voisin a été supprimé de vos favoris!", Snackbar.LENGTH_LONG)
+                    .setAction("Action", null).show();
+                isFavorite = false;
+            //     mFavApiService.deleteFavoriteNeighbour(Neihbour neighbour);
+        }
+
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
@@ -114,6 +153,7 @@ public class ZoomNeighbourActivity extends AppCompatActivity {
         this.menu = menu;
         getMenuInflater().inflate(R.menu.zoom_menu, menu);
         hideOption(R.id.favorit_zoom);
+
         return true;
     }
 
@@ -122,17 +162,24 @@ public class ZoomNeighbourActivity extends AppCompatActivity {
         // Handle action bar item clicks here. The action bar will
         // automatically handle clicks on the Home/Up button, so long
         // as you specify a parent activity in AndroidManifest.xml.
-        int id = item.getItemId();
 
-        //noinspection SimplifiableIfStatement
-        if (id == R.id.action_settings) {
-            return true;
-        } else if (id == R.id.favorit_zoom) {
-            return true;
+        int id = item.getItemId();
+        if (!isFavorite) {
+            item.setIcon( R.drawable.ic_baseline_star_24);
+            isFavorite = true;
+    //        addFavorit();
+
+        } else {
+            item.setIcon(R.drawable.ic_baseline_star_border_24);
+            isFavorite= false;
+    //        deleteFavorit(idNeighbour);
         }
 
-        return super.onOptionsItemSelected(item);
-    }
+        System.out.println(nom);
+        System.out.println(isFavorite);
+        //noinspection SimplifiableIfStatement
+            return true;
+        }
 
     private void hideOption(int id) {
         MenuItem item = menu.findItem(id);
@@ -144,41 +191,4 @@ public class ZoomNeighbourActivity extends AppCompatActivity {
         item.setVisible(true);
     }
 
-    private void fabOnclickListener() {
-        fab.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view_zoom) {
-                     if (!isFavorite) {
-                    fab.setImageResource(R.drawable.ic_baseline_star_24);
-                    fab.hide();
-                    fab.show();
-                    addFavoriteNeighbour(view_zoom);
-                } else {
-                    deleteFavoriteNeighbour(view_zoom);
-                }
-            }
-        });
-    }
-
-    private void addFavoriteNeighbour(View view_zoom) {
-        fab.setImageResource(R.drawable.ic_baseline_star_24);
-        fab.hide();
-        fab.show();
-        Snackbar.make(view_zoom, "Ce voisin a été ajouté de vos favoris!", Snackbar.LENGTH_LONG)
-                .setAction("Action", null).show();
-
-        mFavApiService.addFavoriteNeighbour(view_zoom);
-
-        isFavorite = true;
-        }
-
-    private void deleteFavoriteNeighbour(View view_zoom) {
-        fab.setImageResource(R.drawable.ic_baseline_star_border_24);
-        fab.hide();
-        fab.show();
-        Snackbar.make(view_zoom, "Ce voisin a été supprimé de vos favoris!", Snackbar.LENGTH_LONG)
-                .setAction("Action", null).show();
-        isFavorite = false;
-        mFavApiService.deleteFavoriteNeighbour(view_zoom);
-    }
-}
+   }

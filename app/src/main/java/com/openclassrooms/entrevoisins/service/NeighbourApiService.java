@@ -17,16 +17,8 @@ public interface NeighbourApiService {
      */
     List<Neighbour> getNeighbours();
 
+
     /**
-     * Get all my Neighbours
-     * @return {@link List}
-     */
-
-    void addFavoriteNeighbour(View view_zoom);
-
-    void deleteFavoriteNeighbour(View view_zoom);
-
-        /**
      * Deletes a neighbour
      * @param neighbour
      */
@@ -39,4 +31,12 @@ public interface NeighbourApiService {
     void createNeighbour(Neighbour neighbour);
 
     List<Neighbour> getFavoritNeighbours();
+
+    /**
+     * Liste des voisins favoris
+     * @return {@link List}
+     */
+    void addFavoriteNeighbour(Neighbour neighbour);
+
+    void deleteFavoriteNeighbour(Neighbour neighbour);
 }
