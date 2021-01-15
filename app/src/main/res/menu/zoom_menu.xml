@@ -6,17 +6,12 @@
     xmlns:tools="http://schemas.android.com/tools"
     tools:context="com.openclassrooms.entrevoisins.ui.neighbour_list.ZoomNeighbourActivity">
 
-<item
-    android:id="@+id/favorit_zoom"
-    android:orderInCategory="200"
-    app:showAsAction="ifRoom"
-    android:scaleType="center"
-    android:backgroundTint="#FCFCFC"
-    app:borderWidth="0dp"
-    app:fabSize="normal"
-    app:fabCustomSize="@dimen/fab_width"
-    android:icon="@drawable/ic_baseline_star_border_24"
-    tools:ignore="MenuTitle" />
+    <item
+        android:id="@+id/favorit_zoom"
+        android:orderInCategory="200"
+        app:showAsAction="ifRoom"
+        android:icon="@drawable/ic_baseline_star_border_24"
+        tools:ignore="MenuTitle" />
 </menu>
 
 

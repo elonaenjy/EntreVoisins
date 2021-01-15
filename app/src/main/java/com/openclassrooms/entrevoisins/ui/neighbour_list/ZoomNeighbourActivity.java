@@ -147,22 +147,27 @@ public class ZoomNeighbourActivity extends AppCompatActivity {
         // Handle action bar item clicks here. The action bar will
         // automatically handle clicks on the Home/Up button, so long
         // as you specify a parent activity in AndroidManifest.xml.
-
-        int id = item.getItemId();
-        if (!isFavorite) {
-            item.setIcon( R.drawable.ic_baseline_star_24);
-            isFavorite = true;
-            addFavorit(neighbour);
-
-        } else {
-            item.setIcon(R.drawable.ic_baseline_star_border_24);
-            isFavorite= false;
-            deleteFavorit(neighbour);
+        switch (item.getItemId()) {
+            case android.R.id.home: {
+                finish();
+                return true;
+            }
+            case android.R.id.icon: {
+                System.out.println( "je clique sur l'icône" );
+                if (!isFavorite) {
+                    item.setIcon( R.drawable.ic_baseline_star_24 );
+                    isFavorite = true;
+                    addFavorit( neighbour );
+                } else {
+                    item.setIcon( R.drawable.ic_baseline_star_border_24 );
+                    isFavorite = false;
+                    deleteFavorit( neighbour );
+                }
+                return true;
+            }
         }
-
-        //noinspection SimplifiableIfStatement
-            return true;
-        }
+        return super.onOptionsItemSelected( item );
+    }
 
     private void hideOption(int id) {
         MenuItem item = menu.findItem(id);

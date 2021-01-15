@@ -9,6 +9,8 @@ import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 import android.view.LayoutInflater;
+import android.view.Menu;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 
@@ -29,8 +31,6 @@ public class NeighbourFragment extends Fragment {
 
     private NeighbourApiService mApiService;
     private List<Neighbour> mNeighbours;
-    private List<Neighbour> mFavoritNeighbours;
-
     private RecyclerView mRecyclerView;
 
 
@@ -66,10 +66,10 @@ public class NeighbourFragment extends Fragment {
      */
     private void initList() {
         mNeighbours = mApiService.getNeighbours();
-        mFavoritNeighbours = mApiService.getFavoritNeighbours();
+        mRecyclerView.setAdapter( new MyNeighbourRecyclerViewAdapter( mNeighbours ) );
 
-        mRecyclerView.setAdapter(new MyNeighbourRecyclerViewAdapter(mNeighbours));
     }
+
 
     @Override
     public void onResume() {
@@ -110,8 +110,7 @@ public class NeighbourFragment extends Fragment {
                         startActivity( zoomNeighbourActivity  );
                     }
                 });
-
-
     }
+
 
 }
