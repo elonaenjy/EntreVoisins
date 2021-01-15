@@ -121,7 +121,8 @@ public class ZoomNeighbourActivity extends AppCompatActivity {
                         Snackbar.make(view_zoom, "Ce voisin a été ajouté de vos favoris!", Snackbar.LENGTH_LONG)
                                 .setAction("Action", null).show();
                         isFavorite = true;
-                        addFavorit(Neighbour neighbour);
+                        System.out.println(neighbour.getName());
+                        addFavorit(neighbour);
                     } else {
                         fab.setImageResource(R.drawable.ic_baseline_star_border_24);
                         fab.hide();
