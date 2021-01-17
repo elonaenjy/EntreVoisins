@@ -52,7 +52,6 @@ public class NeighbourFragment extends Fragment {
         mApiService = DI.getNeighbourApiService();
         Bundle bundle = this.getArguments();
         if (bundle != null) {
-            System.out.println("je passe dans bundle non nul"+bundle);
             mIsfavoris = bundle.getBoolean(IS_FAVORIS_KEY);
         }
     }
@@ -73,10 +72,12 @@ public class NeighbourFragment extends Fragment {
      * Init the List of neighbours
      */
     private void initList() {
+        System.out.println(mIsfavoris);
         if (mIsfavoris) {
             mNeighbours = mApiService.getFavoriteNeighbours();
         } else {
             mNeighbours = mApiService.getNeighbours();
+            System.out.println(mNeighbours);
         }
         mRecyclerView.setAdapter( new MyNeighbourRecyclerViewAdapter( mNeighbours ) );
     }
@@ -109,6 +110,7 @@ public class NeighbourFragment extends Fragment {
         mApiService.deleteNeighbour(event.neighbour);
         initList();
     }
+
     private void configureOnClickRecyclerView() {
         ItemClickSupport.addTo(mRecyclerView, R.layout.fragment_neighbour)
                 .setOnItemClickListener(new ItemClickSupport.OnItemClickListener() {

@@ -1,6 +1,7 @@
 package com.openclassrooms.entrevoisins.ui.neighbour_list;
 
 import android.os.Bundle;
+import android.provider.Settings;
 import android.support.design.widget.AppBarLayout;
 import android.support.design.widget.CollapsingToolbarLayout;
 import android.support.design.widget.FloatingActionButton;
@@ -97,13 +98,9 @@ public class ZoomNeighbourActivity extends AppCompatActivity {
             fab = findViewById( R.id.fab );
             if (isFavorite) {
                 fab.setImageResource( R.drawable.ic_baseline_star_24 );
-                fab.hide();
-                fab.show();
-                } else {
+                    } else {
                     fab.setImageResource( R.drawable.ic_baseline_star_border_24 );
-                    fab.hide();
-                    fab.show();
-                }
+                    }
             fabOnclickListener();
         }
 
@@ -113,20 +110,14 @@ public class ZoomNeighbourActivity extends AppCompatActivity {
                 public void onClick(View view_zoom) {
                     if (!isFavorite) {
                         fab.setImageResource(R.drawable.ic_baseline_star_24);
-                        fab.hide();
-                        fab.show();
                         Snackbar.make(view_zoom, "Ce voisin a été ajouté de vos favoris!", Snackbar.LENGTH_LONG)
                                 .setAction("Action", null).show();
-                        isFavorite = true;
-                        System.out.println(neighbour.getName());
                         addFavorit(neighbour);
                     } else {
                         fab.setImageResource(R.drawable.ic_baseline_star_border_24);
-                        fab.hide();
-                        fab.show();
-                        Snackbar.make(view_zoom, "Ce voisin a été supprimé de vos favoris!", Snackbar.LENGTH_LONG)
+                         Snackbar.make(view_zoom, "Ce voisin a été supprimé de vos favoris!", Snackbar.LENGTH_LONG)
                                 .setAction("Action", null).show();
-                        isFavorite = false;
+                         deleteFavorit( neighbour );
                     }
                 }
             });
@@ -135,11 +126,11 @@ public class ZoomNeighbourActivity extends AppCompatActivity {
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         // Inflate the menu; this adds items to the action bar if it is present.
-        this.menu = menu;
-        getMenuInflater().inflate(R.menu.zoom_menu, menu);
-        hideOption(R.id.favorit_zoom);
+            this.menu = menu;
+            getMenuInflater().inflate(R.menu.zoom_menu, menu);
+            hideOption(R.id.favorit_zoom);
 
-        return true;
+            return true;
     }
 
     @Override
@@ -155,11 +146,9 @@ public class ZoomNeighbourActivity extends AppCompatActivity {
             case R.id.favorit_zoom : {
                 if (!isFavorite) {
                     item.setIcon( R.drawable.ic_baseline_star_24 );
-                    isFavorite = true;
                     addFavorit( neighbour );
                 } else {
                     item.setIcon( R.drawable.ic_baseline_star_border_24 );
-                    isFavorite = false;
                     deleteFavorit( neighbour );
                 }
                 return true;
@@ -179,10 +168,12 @@ public class ZoomNeighbourActivity extends AppCompatActivity {
     }
 
     private void addFavorit(Neighbour neighbour) {
+        isFavorite= true;
         mFavApiService.addFavoriteNeighbour(neighbour );
     };
 
     private void deleteFavorit(Neighbour neighbour) {
+        isFavorite = false;
         mFavApiService.deleteFavoriteNeighbour(neighbour );
     };
 }
