@@ -63,6 +63,11 @@ public class ZoomNeighbourActivity extends AppCompatActivity {
                         showOption(R.id.favorit_zoom);
                     } else if (isShow) {
                         isShow = false;
+                        if (isFavorite) {
+                            fab.setImageResource( R.drawable.ic_baseline_star_24 );
+                        } else {
+                            fab.setImageResource( R.drawable.ic_baseline_star_border_24 );
+                        }
                         hideOption(R.id.favorit_zoom);
                     }
                 }
@@ -81,12 +86,6 @@ public class ZoomNeighbourActivity extends AppCompatActivity {
                     .load( neighbour.getAvatarUrl() )
                     .into( mZoomAvatar );
 
-            CollapsingToolbarLayout collapsingToolbar = findViewById( R.id.toolbar_layout_zoom );
-
-            mZoomNom2.setText( neighbour.getName() );
-
-            collapsingToolbar.setTitle( neighbour.getName() );
-
             mZoomLocalisation.setText( neighbour.getAddress() );
             mZoomPhone.setText( neighbour.getPhoneNumber() );
             mZoomAboutMe.setText( neighbour.getAboutMe() );
@@ -94,13 +93,20 @@ public class ZoomNeighbourActivity extends AppCompatActivity {
             mZoomReseau.append( "www.Facebook.com/" + nom );
             isFavorite = neighbour.isFavorit();
             idNeighbour = neighbour.getId();
-
             fab = findViewById( R.id.fab );
+            System.out.println("isFavorite :"+isFavorite);
             if (isFavorite) {
                 fab.setImageResource( R.drawable.ic_baseline_star_24 );
-                    } else {
-                    fab.setImageResource( R.drawable.ic_baseline_star_border_24 );
-                    }
+            } else {
+                fab.setImageResource( R.drawable.ic_baseline_star_border_24 );
+            }
+
+            CollapsingToolbarLayout collapsingToolbar = findViewById( R.id.toolbar_layout_zoom );
+
+            mZoomNom2.setText( neighbour.getName() );
+
+            collapsingToolbar.setTitle( neighbour.getName() );
+
             fabOnclickListener();
         }
 
@@ -113,6 +119,7 @@ public class ZoomNeighbourActivity extends AppCompatActivity {
                         Snackbar.make(view_zoom, "Ce voisin a été ajouté de vos favoris!", Snackbar.LENGTH_LONG)
                                 .setAction("Action", null).show();
                         addFavorit(neighbour);
+
                     } else {
                         fab.setImageResource(R.drawable.ic_baseline_star_border_24);
                          Snackbar.make(view_zoom, "Ce voisin a été supprimé de vos favoris!", Snackbar.LENGTH_LONG)
@@ -129,7 +136,6 @@ public class ZoomNeighbourActivity extends AppCompatActivity {
             this.menu = menu;
             getMenuInflater().inflate(R.menu.zoom_menu, menu);
             hideOption(R.id.favorit_zoom);
-
             return true;
     }
 
@@ -138,6 +144,7 @@ public class ZoomNeighbourActivity extends AppCompatActivity {
         // Handle action bar item clicks here. The action bar will
         // automatically handle clicks on the Home/Up button, so long
         // as you specify a parent activity in AndroidManifest.xml.
+
         switch (item.getItemId()) {
             case android.R.id.home: {
                 finish();
@@ -159,21 +166,32 @@ public class ZoomNeighbourActivity extends AppCompatActivity {
 
     private void hideOption(int id) {
         MenuItem item = menu.findItem(id);
+
         item.setVisible(false);
     }
 
     private void showOption(int id) {
         MenuItem item = menu.findItem(id);
+        if (!isFavorite) {
+            item.setIcon( R.drawable.ic_baseline_star_border_24 );
+            } else {
+                item.setIcon( R.drawable.ic_baseline_star_24 );
+            }
         item.setVisible(true);
     }
 
     private void addFavorit(Neighbour neighbour) {
-        isFavorite= true;
-        mFavApiService.addFavoriteNeighbour(neighbour );
+            isFavorite= true;
+//            neighbour.setIsFavorit( isFavorite);
+//            mFavApiService.modifyNeighbour(neighbour);
+            mFavApiService.addFavoriteNeighbour(neighbour );
+
     };
 
     private void deleteFavorit(Neighbour neighbour) {
         isFavorite = false;
-        mFavApiService.deleteFavoriteNeighbour(neighbour );
+        neighbour.setIsFavorit( isFavorite);
+ //       mFavApiService.modifyNeighbour(neighbour);
+ //       mFavApiService.deleteFavoriteNeighbour(neighbour );
     };
 }

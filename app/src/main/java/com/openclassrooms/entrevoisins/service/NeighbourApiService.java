@@ -47,4 +47,5 @@ public interface NeighbourApiService {
      * @param neighbour
      */
     void deleteFavoriteNeighbour(Neighbour neighbour);
+
 }
