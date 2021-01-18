@@ -48,4 +48,11 @@ public interface NeighbourApiService {
      */
     void deleteFavoriteNeighbour(Neighbour neighbour);
 
+    /**
+     * modification d'un voisin
+     * @param neighbour
+     */
+
+    void modifyNeighbour(Neighbour neighbour);
+
 }

@@ -94,7 +94,6 @@ public class ZoomNeighbourActivity extends AppCompatActivity {
             isFavorite = neighbour.isFavorit();
             idNeighbour = neighbour.getId();
             fab = findViewById( R.id.fab );
-            System.out.println("isFavorite :"+isFavorite);
             if (isFavorite) {
                 fab.setImageResource( R.drawable.ic_baseline_star_24 );
             } else {
@@ -182,16 +181,14 @@ public class ZoomNeighbourActivity extends AppCompatActivity {
 
     private void addFavorit(Neighbour neighbour) {
             isFavorite= true;
-//            neighbour.setIsFavorit( isFavorite);
-//            mFavApiService.modifyNeighbour(neighbour);
-            mFavApiService.addFavoriteNeighbour(neighbour );
+            neighbour.setIsFavorit( isFavorite);
+            mFavApiService.modifyNeighbour(neighbour);
 
     };
 
     private void deleteFavorit(Neighbour neighbour) {
         isFavorite = false;
         neighbour.setIsFavorit( isFavorite);
- //       mFavApiService.modifyNeighbour(neighbour);
- //       mFavApiService.deleteFavoriteNeighbour(neighbour );
+        mFavApiService.modifyNeighbour(neighbour);
     };
 }

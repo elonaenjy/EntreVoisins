@@ -70,4 +70,11 @@ public class DummyNeighbourApiService implements  NeighbourApiService {
         favoriteList.remove(neighbour);
     }
 
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    public void modifyNeighbour(Neighbour neighbour) {
+        neighbours.set(neighbours.indexOf(neighbour),neighbour);
+    }
 }
