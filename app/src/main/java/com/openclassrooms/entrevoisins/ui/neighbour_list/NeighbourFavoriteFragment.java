@@ -1,7 +1,6 @@
 package com.openclassrooms.entrevoisins.ui.neighbour_list;
 
 import android.content.Context;
-import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v7.widget.DividerItemDecoration;
@@ -16,28 +15,27 @@ import com.openclassrooms.entrevoisins.di.DI;
 import com.openclassrooms.entrevoisins.events.DeleteNeighbourEvent;
 import com.openclassrooms.entrevoisins.model.Neighbour;
 import com.openclassrooms.entrevoisins.service.NeighbourApiService;
-import com.openclassrooms.entrevoisins.utils.ItemClickSupport;
 
 import org.greenrobot.eventbus.EventBus;
 import org.greenrobot.eventbus.Subscribe;
 
 import java.util.List;
+import java.util.Objects;
 
 
-public class NeighbourFragment extends Fragment {
+public class NeighbourFavoriteFragment extends Fragment {
 
     private NeighbourApiService mApiService;
-    private List<Neighbour> mNeighbours;
+    private List<Neighbour> mFavoriteNeighbours;
     private RecyclerView mRecyclerView;
-
 
     /**
      * Create and return a new instance
      *
-     * @return @{@link NeighbourFragment}
+     * @return @{@link NeighbourFavoriteFragment}
      */
-    public static NeighbourFragment newInstance() {
-        return new NeighbourFragment();
+    public static NeighbourFavoriteFragment newInstance() {
+        return new NeighbourFavoriteFragment();
     }
 
     @Override
@@ -49,27 +47,35 @@ public class NeighbourFragment extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        View view = inflater.inflate(R.layout.fragment_neighbour_list, container, false);
+        View view = inflater.inflate(R.layout.fragment_favorite_list_neighbour, container, false);
         Context context = view.getContext();
         mRecyclerView = (RecyclerView) view;
         mRecyclerView.setLayoutManager(new LinearLayoutManager(context));
-        mRecyclerView.addItemDecoration(new DividerItemDecoration(getContext(), DividerItemDecoration.VERTICAL));
-        this.configureOnClickRecyclerView();
+        mRecyclerView.addItemDecoration(new DividerItemDecoration(Objects.requireNonNull(getContext()), DividerItemDecoration.VERTICAL));
+
+
+        initFavoriteList();
         return view;
     }
 
+
     /**
-     * Init the List of neighbours
+     * Init the List of favorite neighbours
      */
-    private void initList() {
-        mNeighbours = mApiService.getNeighbours();
-        mRecyclerView.setAdapter(new MyNeighbourRecyclerViewAdapter(mNeighbours));
+    private void initFavoriteList() {
+
+        mFavoriteNeighbours = mApiService.getFavoriteNeighbours();
+        if (mFavoriteNeighbours != null) {
+            mRecyclerView.setAdapter(new MyNeighbourRecyclerViewAdapter(mFavoriteNeighbours));
+        }
+
     }
 
+    // onResume set for refreshing the view
     @Override
     public void onResume() {
         super.onResume();
-        initList();
+        initFavoriteList();
     }
 
     @Override
@@ -92,19 +98,7 @@ public class NeighbourFragment extends Fragment {
     @Subscribe
     public void onDeleteNeighbour(DeleteNeighbourEvent event) {
         mApiService.deleteNeighbour(event.neighbour);
-        initList();
+        initFavoriteList();
     }
 
-    private void configureOnClickRecyclerView() {
-        ItemClickSupport.addTo(mRecyclerView, R.layout.fragment_neighbour)
-                .setOnItemClickListener(new ItemClickSupport.OnItemClickListener() {
-                    @Override
-                    public void onItemClicked(RecyclerView recyclerView, int position, View v) {
-                        Neighbour neighbour = mNeighbours.get(position);
-                        Intent zoomNeighbourActivity = new Intent(getContext(), ZoomNeighbourActivity.class );
-                        zoomNeighbourActivity.putExtra("NEIGHBOUR", neighbour);
-                        startActivity( zoomNeighbourActivity  );
-                    }
-                });
-    }
 }
