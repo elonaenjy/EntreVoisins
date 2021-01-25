@@ -1,6 +1,7 @@
 package com.openclassrooms.entrevoisins.ui.neighbour_list;
 
 import android.content.Context;
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v7.widget.DividerItemDecoration;
@@ -15,6 +16,7 @@ import com.openclassrooms.entrevoisins.di.DI;
 import com.openclassrooms.entrevoisins.events.DeleteNeighbourEvent;
 import com.openclassrooms.entrevoisins.model.Neighbour;
 import com.openclassrooms.entrevoisins.service.NeighbourApiService;
+import com.openclassrooms.entrevoisins.utils.ItemClickSupport;
 
 import org.greenrobot.eventbus.EventBus;
 import org.greenrobot.eventbus.Subscribe;
@@ -52,7 +54,7 @@ public class NeighbourFavoriteFragment extends Fragment {
         mRecyclerView = (RecyclerView) view;
         mRecyclerView.setLayoutManager(new LinearLayoutManager(context));
         mRecyclerView.addItemDecoration(new DividerItemDecoration(Objects.requireNonNull(getContext()), DividerItemDecoration.VERTICAL));
-
+        this.configureOnClickRecyclerView();
 
         initFavoriteList();
         return view;
@@ -100,5 +102,16 @@ public class NeighbourFavoriteFragment extends Fragment {
         mApiService.deleteNeighbour(event.neighbour);
         initFavoriteList();
     }
-
+    private void configureOnClickRecyclerView() {
+        ItemClickSupport.addTo(mRecyclerView, R.layout.fragment_neighbour)
+                .setOnItemClickListener(new ItemClickSupport.OnItemClickListener() {
+                    @Override
+                    public void onItemClicked(RecyclerView recyclerView, int position, View v) {
+                        Neighbour neighbour = mFavoriteNeighbours.get(position);
+                        Intent zoomNeighbourActivity = new Intent(getContext(), ZoomNeighbourActivity.class );
+                        zoomNeighbourActivity.putExtra("NEIGHBOUR", neighbour);
+                        startActivity( zoomNeighbourActivity  );
+                    }
+                });
+    }
 }

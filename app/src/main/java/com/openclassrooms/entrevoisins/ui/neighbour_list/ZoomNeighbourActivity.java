@@ -183,12 +183,12 @@ public class ZoomNeighbourActivity extends AppCompatActivity {
             isFavorite= true;
             neighbour.setIsFavorit( isFavorite);
             mFavApiService.modifyNeighbour(neighbour);
-
     };
 
     private void deleteFavorit(Neighbour neighbour) {
         isFavorite = false;
         neighbour.setIsFavorit( isFavorite);
         mFavApiService.modifyNeighbour(neighbour);
+        mFavApiService.deleteFavoriteNeighbour( neighbour );
     };
 }
