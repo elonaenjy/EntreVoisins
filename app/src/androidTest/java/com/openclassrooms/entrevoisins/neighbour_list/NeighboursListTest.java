@@ -1,5 +1,6 @@
 package com.openclassrooms.entrevoisins.neighbour_list;
 
+import android.support.test.espresso.action.ViewActions;
 import android.support.test.espresso.contrib.RecyclerViewActions;
 import android.support.test.rule.ActivityTestRule;
 import android.support.test.runner.AndroidJUnit4;
@@ -24,6 +25,7 @@ import static android.support.test.espresso.assertion.ViewAssertions.matches;
 import static android.support.test.espresso.matcher.ViewMatchers.assertThat;
 import static android.support.test.espresso.matcher.ViewMatchers.hasMinimumChildCount;
 import static android.support.test.espresso.matcher.ViewMatchers.isDisplayed;
+import static android.support.test.espresso.matcher.ViewMatchers.isRoot;
 import static android.support.test.espresso.matcher.ViewMatchers.withId;
 import static android.support.test.espresso.matcher.ViewMatchers.withText;
 import static com.openclassrooms.entrevoisins.utils.RecyclerViewItemCountAssertion.withItemCount;
@@ -136,17 +138,16 @@ public class NeighboursListTest {
      */
       @Test
       public void myNeighboursList_addNeighbourToFavoritesAction_shouldAddTheNeighbourToFavorites() {
-        // Click on the second item in the neighbour list:
+        // Click on the first item in the neighbour list:
          onView(withId(R.id.list_neighbours))
-                 .perform(RecyclerViewActions.actionOnItemAtPosition(1, click()));
+                 .perform(RecyclerViewActions.actionOnItemAtPosition(0, click()));
         // Add the neighbour to favorites
           onView((withId(R.id.fab)))
                  .perform(click());
          // Go back on neighbour list view and to favorites list view
-         // TODO ne fonctionne : à corriger
-                  onView(withId(R.id.toolbar))
-                 .perform(click());
-        // Neighbour should appear in the list of favorites neighbours
+          onView(isRoot()).perform( ViewActions.pressBack());
+
+          // Neighbour should appear in the list of favorites neighbours
           onView(withId(R.id.favorite_list_neighbours))
                 .check(withItemCount(1));
      }
