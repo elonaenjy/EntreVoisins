@@ -47,7 +47,7 @@ public class ZoomNeighbourActivity extends AppCompatActivity {
             setContentView( R.layout.activity_zoom_neighbour );
             Toolbar toolbar = findViewById( R.id.toolbar );
             setSupportActionBar( toolbar );
-            getSupportActionBar().setDisplayHomeAsUpEnabled( true );
+//            getSupportActionBar().setDisplayHomeAsUpEnabled( true );
 
             AppBarLayout mAppBarLayout = (AppBarLayout) findViewById(R.id.app_bar);
             mAppBarLayout.addOnOffsetChangedListener(new AppBarLayout.OnOffsetChangedListener() {
