@@ -1,15 +1,12 @@
 package com.openclassrooms.entrevoisins.ui.neighbour_list;
 
 import android.os.Bundle;
-import android.provider.Settings;
 import android.support.design.widget.AppBarLayout;
 import android.support.design.widget.CollapsingToolbarLayout;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
-import android.support.v7.widget.helper.ItemTouchHelper;
-import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -41,13 +38,13 @@ public class ZoomNeighbourActivity extends AppCompatActivity {
     private NeighbourApiService mFavApiService;
 
     @Override
+
         protected void onCreate(Bundle savedInstanceState) {
             mFavApiService = DI.getNeighbourApiService();
             super.onCreate( savedInstanceState );
             setContentView( R.layout.activity_zoom_neighbour );
             Toolbar toolbar = findViewById( R.id.toolbar );
             setSupportActionBar( toolbar );
-//            getSupportActionBar().setDisplayHomeAsUpEnabled( true );
 
             AppBarLayout mAppBarLayout = (AppBarLayout) findViewById(R.id.app_bar);
             mAppBarLayout.addOnOffsetChangedListener(new AppBarLayout.OnOffsetChangedListener() {
@@ -107,37 +104,8 @@ public class ZoomNeighbourActivity extends AppCompatActivity {
             collapsingToolbar.setTitle( neighbour.getName() );
 
             fabOnclickListener();
-        }
 
-        private void fabOnclickListener() {
-            fab.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View view_zoom) {
-                    if (!isFavorite) {
-                        fab.setImageResource(R.drawable.ic_baseline_star_24);
-                        Snackbar.make(view_zoom, "Ce voisin a été ajouté de vos favoris!", Snackbar.LENGTH_LONG)
-                                .setAction("Action", null).show();
-                        addFavorit(neighbour);
-
-                    } else {
-                        fab.setImageResource(R.drawable.ic_baseline_star_border_24);
-                         Snackbar.make(view_zoom, "Ce voisin a été supprimé de vos favoris!", Snackbar.LENGTH_LONG)
-                                .setAction("Action", null).show();
-                         deleteFavorit( neighbour );
-                    }
-                }
-            });
-        }
-
-    @Override
-    public boolean onCreateOptionsMenu(Menu menu) {
-        // Inflate the menu; this adds items to the action bar if it is present.
-            this.menu = menu;
-            getMenuInflater().inflate(R.menu.zoom_menu, menu);
-            hideOption(R.id.favorit_zoom);
-            return true;
     }
-
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         // Handle action bar item clicks here. The action bar will
@@ -162,6 +130,37 @@ public class ZoomNeighbourActivity extends AppCompatActivity {
         }
         return super.onOptionsItemSelected( item );
     }
+
+
+        private void fabOnclickListener() {
+            fab.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view_zoom) {
+                    if (!isFavorite) {
+                        fab.setImageResource(R.drawable.ic_baseline_star_24);
+                        Snackbar.make(view_zoom, "Ce voisin a été ajouté de vos favoris!", Snackbar.LENGTH_LONG)
+                                .setAction("Action", null).show();addFavorit(neighbour);
+
+                    } else {
+                        fab.setImageResource(R.drawable.ic_baseline_star_border_24);
+                         Snackbar.make(view_zoom, "Ce voisin a été supprimé de vos favoris!", Snackbar.LENGTH_LONG)
+                                .setAction("Action", null).show();
+                         deleteFavorit( neighbour );
+                    }
+                }
+            });
+        }
+
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        // Inflate the menu; this adds items to the action bar if it is present.
+            this.menu = menu;
+            getMenuInflater().inflate(R.menu.zoom_menu, menu);
+            hideOption(R.id.favorit_zoom);
+            return true;
+    }
+
+
 
     private void hideOption(int id) {
         MenuItem item = menu.findItem(id);

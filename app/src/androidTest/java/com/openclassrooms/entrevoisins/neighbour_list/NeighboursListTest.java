@@ -145,7 +145,7 @@ public class NeighboursListTest {
           onView((withId(R.id.fab)))
                  .perform(click());
          // Go back on neighbour list view and to favorites list view
-          onView(isRoot()).perform( ViewActions.pressBack());
+         onView(isRoot()).perform( ViewActions.pressBack());
 
           // Neighbour should appear in the list of favorites neighbours
           onView(withId(R.id.favorite_list_neighbours))
