@@ -101,7 +101,7 @@ public class NeighboursListTest {
      * When we click on a neighbour in the list, the neighbour profile is opened
      */
     @Test
-    public void myNeighboursList_clickOnNeighbourAction_shouldOpenNeighbourProfile() {
+    public void myNeighboursList_clickOnNeighbourAction_shouldOpenNeighbourZoom() {
         // Click on the second item in the neighbour list:
         onView(withId(R.id.list_neighbours))
                 .perform(RecyclerViewActions.actionOnItemAtPosition(1, click()));
