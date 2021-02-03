@@ -55,19 +55,23 @@ public class NeighbourServiceTest {
     @Test
     public void addNeighbourToFavoritesWithSuccess() {
         Neighbour neighbourToAddToFavorites = service.getNeighbours().get( 0 );
-        service.addFavoriteNeighbour( neighbourToAddToFavorites );
-        assertTrue( service.getFavoriteNeighbours().contains( neighbourToAddToFavorites ) );
+        /// modification de la valeur du booleen et modification dans la liste des voisins
+        neighbourToAddToFavorites.setIsFavorit( true);
+        service.modifyNeighbour(neighbourToAddToFavorites);
+        // Le voisin modifié est présent dans les deux listes
+        assertTrue(service.getFavoriteNeighbours().contains(neighbourToAddToFavorites));
     }
 
     /**
      * Adds then removes a neighbour to favorites and checks it is not in favorites list
      */
      @Test public void removeNeighbourFromFavoritesWithSuccess() {
-        Neighbour neighbourToRemoveFromFavorites = service.getNeighbours().get( 0 );
-        service.addFavoriteNeighbour(neighbourToRemoveFromFavorites);
-        assertTrue(service.getFavoriteNeighbours().contains(neighbourToRemoveFromFavorites));
-        service.deleteFavoriteNeighbour( neighbourToRemoveFromFavorites);
-        assertFalse(service.getFavoriteNeighbours().contains(neighbourToRemoveFromFavorites));
+         Neighbour neighbourToRemoveToFavorites = service.getNeighbours().get( 0 );
+         /// modification de la valeur du booleen et modification dans la liste des voisins
+         neighbourToRemoveToFavorites.setIsFavorit( false);
+         service.modifyNeighbour(neighbourToRemoveToFavorites);
+         // Le voisin modifié est présent dans la liste des favoris deux listes
+         assertFalse(service.getFavoriteNeighbours().contains(neighbourToRemoveToFavorites));
       }
 
     /**
@@ -77,12 +81,19 @@ public class NeighbourServiceTest {
      @Test
      public void deleteNeighbourAddedToFavoritesWithSuccess() {
           Neighbour neighbourToAddToFavoritesAndToDelete = service.getNeighbours().get(0);
-          service.addFavoriteNeighbour( neighbourToAddToFavoritesAndToDelete);
+         /// modification de la valeur du booleen et modification dans la liste des voisins
+          neighbourToAddToFavoritesAndToDelete.setIsFavorit( true);
+          service.modifyNeighbour(neighbourToAddToFavoritesAndToDelete);
+          // Le voisin modifié est présent dans les deux listes
           assertTrue(service.getFavoriteNeighbours().contains(neighbourToAddToFavoritesAndToDelete));
           assertTrue(service.getNeighbours().contains(neighbourToAddToFavoritesAndToDelete));
-          service.deleteNeighbour(neighbourToAddToFavoritesAndToDelete);
-          assertFalse(service.getNeighbours().contains(neighbourToAddToFavoritesAndToDelete));
-          assertFalse(service.getFavoriteNeighbours().contains(neighbourToAddToFavoritesAndToDelete));
+         /// modification de la valeur du booleen pour le passer en non favoris et modification dans la liste des voisins
+         neighbourToAddToFavoritesAndToDelete.setIsFavorit( false);
+         service.modifyNeighbour(neighbourToAddToFavoritesAndToDelete);
+         // Le voisin modifié est supprimé de la liste des favoris et toujours présent dans la liste complète
+         assertFalse(service.getFavoriteNeighbours().contains(neighbourToAddToFavoritesAndToDelete));
+         assertTrue(service.getNeighbours().contains(neighbourToAddToFavoritesAndToDelete));
+
       }
 }
 
