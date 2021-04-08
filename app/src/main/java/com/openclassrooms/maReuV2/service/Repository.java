@@ -24,10 +24,10 @@ public class Repository  {
         lMeetings.remove(dMeeting);
     }
 
-
     public void createMeeting(Meeting aMeeting) {
         lMeetings.add(aMeeting);
     }
+
     public static List<Meeting> lMeetingsFilteredId(List<Integer> lRoomSelectedId){
         long nbMeetings=lMeetings.size();
         List<Meeting> lMeetingsFiltered=new ArrayList<>();
@@ -45,7 +45,6 @@ public class Repository  {
         }
         return lMeetingsFiltered;
     }
-
 
     public static List<Meeting> filterMeetingsByDate(int year, int month, int day, List<Meeting> listMeetings) {
         final List<Meeting> meetings=listMeetings;
@@ -75,6 +74,4 @@ public class Repository  {
         }
         return roomAvailable;
     }
-
-
 }
