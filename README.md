@@ -1,15 +1,12 @@
 # OpenClassrooms
 
-Ce dépôt contient le résultat du projet 4 "Ma Reu". L'application contient plusieurs fonctionnalités :
-* affichage d'une liste de reunion
-* ajout d'une réunion
-* suppression d'une réunion
-* filtre  par date
-* filtre par salle de réunion
+Ce dépôt contient le résultat du projet 3 "EntreVoisins". L'application contient plusieurs fonctionnalités :
+* affichage de la liste des voisins
+* ajout d'un voisin
+* affichage du détail d'un voisin (fonctionnalité ajoutée dans le cadre du projet 3 du programme PRFE3)
+* Gestion de la liste des favoris (fonctionnalité ajoutée dans le cadre du projet 3 du programme PRFE3)
 
-Il ne doit pas y avoir de persistance de données et l'application doit démarrer vide.
-
-Les sources sont disponibles dans le dépôt public github : https://github.com/elonaenjy/MaReuV2
+Les sources sont disponibles dans le dépôt public github : https://github.com/elonaenjy/EntreVoisins
 
 Cette application a été développée avec l'IDE Android Studio version 4.1.2 sur les lequel la version SDK Android 10(Q) correspondant à l'API 29 a été installée.
 Les tests ont été faits sur un device de type "Pixel 4 API 29". 
@@ -24,9 +21,9 @@ Pour récupérer les sources :
 * Lancer andoid Studio
 * Cliquer sur File
 	- get from Version Control. 
-	- Dans l'URL préciser celle ou se trouve le dépôt github : https://github.com/elonaenjy/MaReuV2.
+	- Dans l'URL préciser celle ou se trouve le dépôt github : https://github.com/elonaenjy/EntreVoisins. 
 	- Préciser le répertoire de travail ou seront stockées les sources de développement.
 
 
-Des tests unitaires et instrumentalisés sont déjà disponibles en lançant les tests prévus dans androidTest et dans Test.
+des tests unitaires et instrumentalisés sont déjà disponibles en lançant les tests prévus dans androidTest et dans Test.
 
